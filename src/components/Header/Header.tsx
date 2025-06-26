@@ -1,4 +1,5 @@
 import React, { RefObject } from 'react';
+import classNames from 'classnames';
 
 interface HeaderProps {
   todosCount: number;
@@ -24,7 +25,9 @@ export const Header: React.FC<HeaderProps> = ({
       {/* this button should have `active` class only if all todos are completed */}
       <button
         type="button"
-        className={`todoapp__toggle-all${todosCount > 0 && allCompleted ? ' active' : ''}`}
+        className={classNames('todoapp__toggle-all', {
+          active: todosCount > 0 && allCompleted,
+        })}
         data-cy="ToggleAllButton"
         disabled={isLoading || todosCount === 0}
       />

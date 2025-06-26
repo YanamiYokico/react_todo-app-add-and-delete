@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import React from 'react';
-
-type Filter = 'all' | 'active' | 'completed';
+import { Filter } from '../../types/Filter';
 
 interface FooterProps {
   activeCount: number;
@@ -25,41 +25,22 @@ export const Footer: React.FC<FooterProps> = ({
 
       {/* Active link should have the 'selected' class */}
       <nav className="filter" data-cy="Filter">
-        <a
-          href="#/"
-          className={`filter__link${filter === 'all' ? ' selected' : ''}`}
-          data-cy="FilterLinkAll"
-          onClick={e => {
-            e.preventDefault();
-            setFilter('all');
-          }}
-        >
-          All
-        </a>
-
-        <a
-          href="#/active"
-          className={`filter__link${filter === 'active' ? ' selected' : ''}`}
-          data-cy="FilterLinkActive"
-          onClick={e => {
-            e.preventDefault();
-            setFilter('active');
-          }}
-        >
-          Active
-        </a>
-
-        <a
-          href="#/completed"
-          className={`filter__link${filter === 'completed' ? ' selected' : ''}`}
-          data-cy="FilterLinkCompleted"
-          onClick={e => {
-            e.preventDefault();
-            setFilter('completed');
-          }}
-        >
-          Completed
-        </a>
+        {Object.values(Filter).map(option => (
+          <a
+            key={option}
+            href={`#/${option === Filter.all ? '' : option}`}
+            className={classNames('filter__link', {
+              selected: filter === Filter.all,
+            })}
+            data-cy={`FilterLink${option.charAt(0).toUpperCase() + option.slice(1)}`}
+            onClick={e => {
+              e.preventDefault();
+              setFilter(option);
+            }}
+          >
+            {option.charAt(0).toUpperCase() + option.slice(1)}
+          </a>
+        ))}
       </nav>
 
       {/* this button should be disabled if there are no completed todos */}
