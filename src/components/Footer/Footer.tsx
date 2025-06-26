@@ -30,7 +30,7 @@ export const Footer: React.FC<FooterProps> = ({
             key={option}
             href={`#/${option === Filter.all ? '' : option}`}
             className={classNames('filter__link', {
-              selected: filter === Filter.all,
+              selected: filter === option,
             })}
             data-cy={`FilterLink${option.charAt(0).toUpperCase() + option.slice(1)}`}
             onClick={e => {
